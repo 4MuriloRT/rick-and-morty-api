@@ -1,5 +1,6 @@
 .filters-container{
     display: flex;
+    flex-wrap: wrap;
     gap: 16px;
     align-items: center;
     justify-content: flex-start;
@@ -30,4 +31,32 @@
 .input-field:focus, .select-field:focus{
     border-color: rgb(1, 177, 1);
     color: rgb(1, 151, 1);
+}
+
+@media (max-width: 768px) {
+    .filters-container {
+        justify-content: center; /* Centraliza os filtros */
+    }
+
+    .input-field {
+        width: 100%; /* Ocupa toda a largura disponível */
+        max-width: 300px;
+    }
+
+    .select-field {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+/* 📱 Responsividade para telas muito pequenas */
+@media (max-width: 480px) {
+    .filters-container {
+        flex-direction: column; /* Empilha os filtros verticalmente */
+        align-items: stretch;
+    }
+
+    .input-field, .select-field {
+        width: 100%;
+    }
 }
