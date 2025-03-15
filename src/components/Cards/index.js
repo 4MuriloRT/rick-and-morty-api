@@ -33,7 +33,7 @@ const Cards = () => {
             <div className="card-container">
                 {characters.length > 0 ? (
                     characters.map((char) => (
-                        <Link key={char.id} to="/personagem" className="card">
+                        <Link key={char.id} to={`/character/${char.id}`} className="card">
                             <div>
                                 <img src={char.image} alt={char.name} />
                                 <div className="card-info">

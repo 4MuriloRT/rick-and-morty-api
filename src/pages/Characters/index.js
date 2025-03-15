@@ -6,7 +6,7 @@ import Cards from "../../components/Cards";
 const Characters = () =>{
     return(
         <div className="container">
-            <img src={imgCharacters} alt="Logo Rick and Morty"/>
+            <img className="image-logo" src={imgCharacters} alt="Logo Rick and Morty"/>
             <Filters className="filters" /> 
             <Cards />  
         </div>

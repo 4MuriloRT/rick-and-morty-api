@@ -16,3 +16,9 @@
 .cards:hover{
     color: rgb(1, 151, 1);
 }
+
+@media (max-width: 425px){
+    .image-logo{
+        width: 300px;
+    }
+}

@@ -11,3 +11,13 @@ export const getCharacters = async (page = 1) => {
         return null;
     }
 };
+
+export const getCharacterById = async (id) => {
+    const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
+    return response.ok ? response.json() : null;
+};
+
+export const getEpisodeByUrl = async (url) => {
+    const response = await fetch(url);
+    return response.ok ? response.json() : null;
+};
