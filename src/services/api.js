@@ -2,9 +2,16 @@ import axios from "axios";
 
 const API_URL = "https://rickandmortyapi.com/api/character";
 
-export const getCharacters = async (page = 1) => {
+export const getCharacters = async (page = 1, filters = {}) => {
     try {
-        const response = await axios.get(`${API_URL}/?page=${page}`);
+        const params = { page };
+
+        // Adiciona filtros à requisição se eles não estiverem vazios
+        Object.entries(filters).forEach(([key, value]) => {
+            if (value) params[key] = value;
+        });
+
+        const response = await axios.get(API_URL, { params });
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar personagens:", error);
@@ -13,11 +20,21 @@ export const getCharacters = async (page = 1) => {
 };
 
 export const getCharacterById = async (id) => {
-    const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
-    return response.ok ? response.json() : null;
+    try {
+        const response = await axios.get(`${API_URL}/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar personagem:", error);
+        return null;
+    }
 };
 
 export const getEpisodeByUrl = async (url) => {
-    const response = await fetch(url);
-    return response.ok ? response.json() : null;
+    try {
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar episódio:", error);
+        return null;
+    }
 };

@@ -3,28 +3,33 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getCharacters } from "../../services/api";
 
-const Cards = () => {
+const Cards = ({filters}) => {
 
     const [characters, setCharacters] = useState([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
 
-    const fetchData = async (pageNumber) =>{
-        const data = await getCharacters(pageNumber);
-        if(data){
-            setCharacters((prevCharacters) => [...prevCharacters, ...data.results]);
-            setHasMore(data.info.next !== null)
+    const fetchData = async (pageNumber, filters) => {
+        const data = await getCharacters(pageNumber, filters);
+        if (data) {
+            if (pageNumber === 1) {
+                setCharacters(data.results);
+            } else {
+                setCharacters((prevCharacters) => [...prevCharacters, ...data.results]);
+            }
+            setHasMore(data.info.next !== null);
         }
     };
 
     useEffect(() =>{
-        fetchData(page);
-    }, []);
+        setPage(1);
+        fetchData(1, filters);
+    }, [filters]);
 
     const loadMore = () => {
         const nextPage = page + 1;
         setPage(nextPage);
-        fetchData(nextPage);
+        fetchData(nextPage, filters);
     };
 
 

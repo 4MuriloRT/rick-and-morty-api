@@ -1,11 +1,33 @@
 import "./filters.css"
+import { useState } from "react";
 
-const Filters = () =>{
+const Filters = ({ onFilterChange }) =>{
+    const [filters, setFilters] = useState({
+        name: "",
+        species: "",
+        gender: "",
+        status: "",
+    });
+
+    const handleChange = (e) =>{
+        const { id, value } = e.target;
+        const newFilters = {...filters, [id]:value};
+        setFilters(newFilters);
+        onFilterChange(newFilters);
+    }
+
     return(
         <div className="filters-container">
-            <input type="text" id="busca" placeholder="Buscar por nome..." className="input-field"/>
+            <input 
+                type="text"
+                id="name" 
+                placeholder="Buscar por nome..." 
+                className="input-field" 
+                value={filters.name}
+                onChange={handleChange}
+            />
             
-            <select className="select-field" id="species">
+            <select className="select-field" id="species" value={filters.species} onChange={handleChange}>
                 <option value="" default> Especie </option>
                 <option value="animal">Animal</option>
                 <option value="alien">Alien</option>
@@ -18,7 +40,7 @@ const Filters = () =>{
                 <option value="robot">Robo</option>
             </select>
 
-            <select className="select-field" id="gender">
+            <select className="select-field" id="gender" value={filters.gender} onChange={handleChange}>
                 <option value="" default> Genero </option>
                 <option value="female">Feminino</option>
                 <option value="male">Masculino</option>
@@ -26,7 +48,7 @@ const Filters = () =>{
                 <option value="unknown">Desconhecido</option>
             </select>
 
-            <select className="select-field" id="status">
+            <select className="select-field" id="status" value={filters.status} onChange={handleChange}>
                 <option value="" default>Estatus</option>
                 <option value="alive">Vivo</option>
                 <option value="dead">Morto</option>
