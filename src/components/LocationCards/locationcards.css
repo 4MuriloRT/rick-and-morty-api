@@ -1,0 +1,45 @@
+.location-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    width: 100%;
+    max-width: 900px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.location-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+}
+
+.location-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+    color: rgb(1, 151, 1); 
+}
+
+@media (max-width: 1024px) {
+    .location-container {
+        grid-template-columns: repeat(3, 240px);
+    }
+}
+
+@media (max-width: 768px) {
+    .location-container {
+        grid-template-columns: repeat(2, 240px);
+    }
+}
+
+@media (max-width: 480px) {
+    .location-container {
+        grid-template-columns: repeat(1, 240px);
+    }
+}

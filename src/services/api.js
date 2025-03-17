@@ -1,17 +1,42 @@
 import axios from "axios";
 
-const API_URL = "https://rickandmortyapi.com/api/character";
+const API_CHARACTERS_URL = "https://rickandmortyapi.com/api/character";
+const API_LOCATIONS_URL = "https://rickandmortyapi.com/api/location";
+
+export const getLocations = async (page = 1, filters = {}) => {
+    try {
+        const params = { page, ...filters };
+
+        const response = await axios.get(API_LOCATIONS_URL, { params });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar localizações:", error);
+        return null;
+    }
+};
+
+export const getAllLocations = async () => {
+    let allLocations = [];
+    let nextPage = `${API_LOCATIONS_URL}?page=1`;
+
+    try {
+        while (nextPage) {
+            const response = await axios.get(nextPage);
+            allLocations = [...allLocations, ...response.data.results];
+            nextPage = response.data.info.next; // Atualiza a próxima página
+        }
+    } catch (error) {
+        console.error("Erro ao buscar todas as localizações:", error);
+    }
+
+    return allLocations;
+};
 
 export const getCharacters = async (page = 1, filters = {}) => {
     try {
-        const params = { page };
+        const params = { page, ...filters };
 
-        // Adiciona filtros à requisição se eles não estiverem vazios
-        Object.entries(filters).forEach(([key, value]) => {
-            if (value) params[key] = value;
-        });
-
-        const response = await axios.get(API_URL, { params });
+        const response = await axios.get(API_CHARACTERS_URL, { params });
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar personagens:", error);
@@ -21,7 +46,7 @@ export const getCharacters = async (page = 1, filters = {}) => {
 
 export const getCharacterById = async (id) => {
     try {
-        const response = await axios.get(`${API_URL}/${id}`);
+        const response = await axios.get(`${API_CHARACTERS_URL}/${id}`);
         return response.data;
     } catch (error) {
         console.error("Erro ao buscar personagem:", error);
